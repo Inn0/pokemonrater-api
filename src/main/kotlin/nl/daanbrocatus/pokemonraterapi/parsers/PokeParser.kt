@@ -100,24 +100,27 @@ class PokeParser(
                 val defense = Defense(it.id, it.name, 0.0F)
                 if(defenses.find { it.id == defense.id } != null) {
                     defenses.find { it.id == defense.id }?.factor = defenses.find { it.id == defense.id }!!.factor * defense.factor
+                } else {
+                    defenses.add(defense)
                 }
-                defenses.add(defense)
             }
 
             halfDamageList.forEach {
                 val defense = Defense(it.id, it.name, 0.5F)
                 if(defenses.find { it.id == defense.id } != null) {
                     defenses.find { it.id == defense.id }?.factor = defenses.find { it.id == defense.id }!!.factor * defense.factor
+                } else {
+                    defenses.add(defense)
                 }
-                defenses.add(defense)
             }
 
             doubleDamageList.forEach {
                 val defense = Defense(it.id, it.name, 2.0F)
                 if(defenses.find { it.id == defense.id } != null) {
                     defenses.find { it.id == defense.id }?.factor = defenses.find { it.id == defense.id }!!.factor * defense.factor
+                } else {
+                    defenses.add(defense)
                 }
-                defenses.add(defense)
             }
         }
 
