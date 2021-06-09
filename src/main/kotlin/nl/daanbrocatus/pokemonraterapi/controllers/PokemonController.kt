@@ -2,7 +2,6 @@ package nl.daanbrocatus.pokemonraterapi.controllers
 
 import nl.daanbrocatus.pokemonraterapi.models.DexPokemon
 import nl.daanbrocatus.pokemonraterapi.models.Pokemon
-import nl.daanbrocatus.pokemonraterapi.pokeapimodels.PokeAPIPokemon
 import nl.daanbrocatus.pokemonraterapi.services.PokemonService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
