@@ -1,5 +1,6 @@
 package nl.daanbrocatus.pokemonraterapi.config
 
+import nl.daanbrocatus.pokemonraterapi.parsers.AbilityParser
 import nl.daanbrocatus.pokemonraterapi.parsers.DexParser
 import nl.daanbrocatus.pokemonraterapi.parsers.PokeParser
 import org.springframework.context.annotation.Bean
@@ -21,5 +22,10 @@ class Config {
     @Bean
     fun dexParser(): DexParser {
         return DexParser()
+    }
+
+    @Bean
+    fun abilityParser(): AbilityParser {
+        return AbilityParser()
     }
 }
