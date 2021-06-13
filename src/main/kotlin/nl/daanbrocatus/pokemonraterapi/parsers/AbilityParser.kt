@@ -16,10 +16,10 @@ class AbilityParser {
     }
 
     fun parseEffect(effectList: List<PokeAPIAbilityEffect>): String {
-        return effectList[effectList.size - 1].effect
+        return effectList.find {it.language.name == "en"}!!.effect
     }
 
     fun parseShortEffect(effectList: List<PokeAPIAbilityEffect>): String {
-        return effectList[effectList.size - 1].short_effect
+        return effectList.find {it.language.name == "en"}!!.short_effect
     }
 }
