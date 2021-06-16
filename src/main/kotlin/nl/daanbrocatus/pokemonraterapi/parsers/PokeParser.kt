@@ -16,8 +16,15 @@ class PokeParser(
             parseAbilities(apiPokemon.abilities),
             parseStats(apiPokemon.stats),
             parseSprites(apiPokemon.sprites),
-            parseDefenses(parseTypes(apiPokemon.types))
+            parseDefenses(parseTypes(apiPokemon.types)),
+            Rating(0,0,0,0,0),
         )
+
+        if(apiPokemon.id < 1000){
+            pokemon.alternateForms = parseAlts(apiPokemon.id)
+        } else {
+            pokemon.alternateForms = getOriginal(apiPokemon)
+        }
 
         return pokemon
     }
@@ -136,6 +143,26 @@ class PokeParser(
             )
             list.add(type)
         }
+        return list
+    }
+
+    fun parseAlts(id: Int): List<DexPokemon> {
+        val list: MutableList<DexPokemon> = mutableListOf()
+        val species = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon-species/$id", PokeAPISpecies::class.java)
+        species?.varieties?.forEach {
+            val pokemon = DexPokemon(
+                name = it.pokemon.name,
+                id = extractId(it.pokemon.url, 34)
+            )
+            list.add(pokemon)
+        }
+        return list
+    }
+
+    fun getOriginal(pokemon: PokeAPIPokemon): List<DexPokemon> {
+        val list: MutableList<DexPokemon> = mutableListOf()
+        list.add(DexPokemon(extractId(pokemon.species.url, 42), pokemon.species.name))
+        list.add(DexPokemon(pokemon.id, pokemon.name))
         return list
     }
 }
