@@ -17,8 +17,15 @@ class PokemonService(
     val dexParser: DexParser
 ) {
     fun getPokemonByName(name: String): Pokemon {
+        var searchName = name
+        if(name.toLowerCase() == "deoxys"){
+            searchName = "deoxys-normal"
+        }
+        if(name.toLowerCase() == "urshifu"){
+            searchName = "urshifu-single-strike"
+        }
         val pokemon: PokeAPIPokemon =
-            restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/$name", PokeAPIPokemon::class.java)
+            restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon/$searchName", PokeAPIPokemon::class.java)
                 ?: throw Exception("Pokemon not found!")
 
         return pokeParser.parse(pokemon)

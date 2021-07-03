@@ -11,6 +11,6 @@ data class Pokemon(
     val stats: Stats,
     val sprites: Sprite,
     val defenses: List<Defense>,
-    val ratings: Rating = Rating(0,0,0,0,0),
+    var ratings: Rating = Rating(0,0,0,0,0),
     var alternateForms: List<DexPokemon> = listOf()
 )

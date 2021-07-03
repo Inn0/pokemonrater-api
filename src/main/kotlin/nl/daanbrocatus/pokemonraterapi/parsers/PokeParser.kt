@@ -2,11 +2,13 @@ package nl.daanbrocatus.pokemonraterapi.parsers
 
 import nl.daanbrocatus.pokemonraterapi.models.*
 import nl.daanbrocatus.pokemonraterapi.pokeapimodels.*
+import nl.daanbrocatus.pokemonraterapi.raters.PokeRater
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 
 class PokeParser(
-    val restTemplate: RestTemplate
+    val restTemplate: RestTemplate,
+    val pokeRater: PokeRater
 ) {
     fun parse(apiPokemon: PokeAPIPokemon): Pokemon{
         val pokemon = Pokemon(
@@ -16,9 +18,10 @@ class PokeParser(
             parseAbilities(apiPokemon.abilities),
             parseStats(apiPokemon.stats),
             parseSprites(apiPokemon.sprites),
-            parseDefenses(parseTypes(apiPokemon.types)),
-            Rating(0,0,0,0,0),
+            parseDefenses(parseTypes(apiPokemon.types))
         )
+
+        pokemon.ratings = pokeRater.ratePokemon(pokemon)
 
         if(apiPokemon.id < 1000){
             pokemon.alternateForms = parseAlts(apiPokemon.id)
