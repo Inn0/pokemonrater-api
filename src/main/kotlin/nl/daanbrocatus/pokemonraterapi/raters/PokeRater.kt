@@ -32,19 +32,61 @@ class PokeRater {
     }
 
     private fun getPhysicalTankRating(pokemon: Pokemon): Int {
-        return 0
+        var rating = 0F
+
+        // Rating based on stats
+        rating += getStatTotal(pokemon.stats)
+        rating += pokemon.stats.hp * 3F
+        rating += pokemon.stats.def * 3F
+
+        // Rating based on defenses
+        rating *= getDefensesMultiplier(pokemon.defenses)
+
+        return rating.toInt()
     }
 
     private fun getSpecialAttackerRating(pokemon: Pokemon): Int {
-        return 0
+        var rating = 0F
+
+        // Rating based on stats
+        rating += getStatTotal(pokemon.stats)
+        rating += pokemon.stats.spa * 3F
+        rating += pokemon.stats.spe * 3F
+
+        // Rating based on defenses
+        rating *= getDefensesMultiplier(pokemon.defenses)
+
+        return rating.toInt()
     }
 
     private fun getSpecialTankRating(pokemon: Pokemon): Int {
-        return 0
+        var rating = 0F
+
+        // Rating based on stats
+        rating += getStatTotal(pokemon.stats)
+        rating += pokemon.stats.spd * 3F
+        rating += pokemon.stats.hp * 3F
+
+        // Rating based on defenses
+        rating *= getDefensesMultiplier(pokemon.defenses)
+
+        return rating.toInt()
     }
 
     private fun getSetupRating(pokemon: Pokemon): Int {
-        return 0
+        var rating = 0F
+
+        // Rating based on stats
+        rating += getStatTotal(pokemon.stats)
+        rating += pokemon.stats.hp
+        rating += pokemon.stats.def
+        rating += pokemon.stats.spd
+        rating += pokemon.stats.spe * 3F
+
+        // Rating based on defenses
+        rating *= getDefensesMultiplier(pokemon.defenses)
+
+        return rating.toInt()
     }
 
     private fun getStatTotal(stats: Stats): Int {
