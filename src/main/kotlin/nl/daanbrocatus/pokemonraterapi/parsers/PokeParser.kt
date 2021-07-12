@@ -23,11 +23,13 @@ class PokeParser(
 
         pokemon.ratings = pokeRater.ratePokemon(pokemon)
 
-        if(apiPokemon.id < 1000){
-            pokemon.alternateForms = parseAlts(apiPokemon.id)
-        } else {
-            pokemon.alternateForms = getOriginal(apiPokemon)
-        }
+        pokemon.alternateForms = parseAlts(apiPokemon)
+
+//        if(apiPokemon.id < 1000){
+//            pokemon.alternateForms = parseAlts(apiPokemon.id)
+//        } else {
+//            pokemon.alternateForms = getOriginal(apiPokemon)
+//        }
 
         return pokemon
     }
@@ -149,9 +151,13 @@ class PokeParser(
         return list
     }
 
-    fun parseAlts(id: Int): List<DexPokemon> {
+    fun parseAlts(pokemon: PokeAPIPokemon): List<DexPokemon> {
+        var id: Int = pokemon.id
+        if(id > 1000) {
+            id = extractId(pokemon.species.url, 42)
+        }
         val list: MutableList<DexPokemon> = mutableListOf()
-        val species = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon-species/$id", PokeAPISpecies::class.java)
+        val species = restTemplate.getForObject("https://pokeapi.co/api/v2/pokemon-species/" + id, PokeAPISpecies::class.java)
         species?.varieties?.forEach {
             val pokemon = DexPokemon(
                 name = it.pokemon.name,
@@ -162,10 +168,10 @@ class PokeParser(
         return list
     }
 
-    fun getOriginal(pokemon: PokeAPIPokemon): List<DexPokemon> {
-        val list: MutableList<DexPokemon> = mutableListOf()
-        list.add(DexPokemon(extractId(pokemon.species.url, 42), pokemon.species.name))
-        list.add(DexPokemon(pokemon.id, pokemon.name))
-        return list
-    }
+//    fun getOriginal(pokemon: PokeAPIPokemon): List<DexPokemon> {
+//        val list: MutableList<DexPokemon> = mutableListOf()
+//        list.add(DexPokemon(extractId(pokemon.species.url, 42), pokemon.species.name))
+//        list.add(DexPokemon(pokemon.id, pokemon.name))
+//        return list
+//    }
 }
