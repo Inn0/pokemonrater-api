@@ -1,6 +1,6 @@
 package nl.daanbrocatus.pokemonraterapi.models
 
 data class Sprite(
-    val default: String,
-    val shiny: String
+    var default: String,
+//    var shiny: String
 )

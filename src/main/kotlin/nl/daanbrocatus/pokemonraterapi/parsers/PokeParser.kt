@@ -80,10 +80,9 @@ class PokeParser(
     }
 
     fun parseSprites(apiSprites: PokeAPISprites): Sprite {
-        val sprite: Sprite = Sprite(
-            apiSprites.front_default,
-            apiSprites.front_shiny
-        )
+        val sprite: Sprite = Sprite("")
+        sprite.default = apiSprites.front_default
+//        sprite.shiny = apiSprites.front_shiny
         return sprite
     }
 
